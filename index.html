@@ -781,34 +781,35 @@
 				  Get a free consultation with one of our leading professionals and get to know more about what we do and how we can be of help.</p>
 			  </div>
 			  <!--===== Start of form =====-->
+			  <h4 class="sent_notification"></h4>
 			  <form id="infinity_contact" method="POST" class="needs-validatio" novalidate>
 				<div class="row">
 				  <div class="col-sm-6">
 					<div class="mb-3">
-					  <input type="text" name="firstname" class="form-control" placeholder="First Name" aria-label="First Name" required>
+					  <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name" aria-label="First Name" required>
 					  <div class="invalid-feedback">Please Enter First Name.</div>
 					</div>
 				  </div>
 				  <div class="col-sm-6">
 					<div class="mb-3">
-					  <input type="text" name="lastname" class="form-control" placeholder="Last Name" aria-label="Last Name" required>
+					  <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name" aria-label="Last Name" required>
 					  <div class="invalid-feedback">Please Enter Last Name.</div>
 					</div>
 				  </div>
 				  <div class="col-sm-6">
 					<div class="mb-3">
-					  <input type="email" name="email" class="form-control" placeholder="info@gmail.com" aria-label="Email" required>
+					  <input type="email" id="email" name="email" class="form-control" placeholder="info@gmail.com" aria-label="Email" required>
 					  <div class="invalid-feedback">Please Enter Valid Email.</div>
 					</div>
 				  </div>
 				  <div class="col-sm-6">
 					<div class="mb-3">
-					  <input type="text" name="phone" class="form-control" placeholder="+444 (111 456 1465)" aria-label="Contact Number">
+					  <input type="text" id="phone" name="phone" class="form-control" placeholder="+234 (111 456 1465)" aria-label="Contact Number">
 					</div>
 				  </div>
 				  <div class="col-12">
 					<div class="mb-3">
-					  <textarea class="form-control"  name="message" id="exampleFormControlTextarea1" placeholder="Your message" rows="3"></textarea>
+					  <textarea class="form-control"  name="message" id="subject" placeholder="Your message" rows="3"></textarea>
 					</div>
 				  </div>
 				  <div class="col-12">
@@ -823,7 +824,7 @@
 					</div>
 				  </div>
 				  <div class="col-12">
-					<button class="btn btn-gradient btn-rounded" type="submit">Send Message</button>
+					<button class="btn btn-gradient btn-rounded" type="button" onclick="sendEmail()" value="Send an Email">Send Message</button>
 				  </div>
 				</div>
 			  </form><br><br>
@@ -949,6 +950,48 @@
 <!--========== 
 	Start of Javascript ==========-->
 
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+	<script type="text/javacript">
+		function sendEmail(){
+			var firstName = $("#firstname");
+			var lastName = $("#lastname");
+			var email = $("#email");
+			var phone = $("#phone");
+			var subject = $("#subject");
+
+			if(isNotEmpty(firstname) && isNotEmpty(lastname) && isNotEmpty(phone) && isNotEmpty(email) && isNotEmpty(subject)){
+				$.ajax({
+					url: 'sendEmail.php',
+					method: 'POST',
+					dataType: 'json',
+					data:{
+						firstname: firstname.val(),
+						lastname: lastname.val(),
+						phone: phone.val(),
+						email: email.val(),
+						subject: subject.val(),
+					}, success: function(response){
+						$("#infinity_contact")[0].rest();
+						$(".sent_notification").text("Message sent successfully.");
+					}
+				})
+			}
+		}
+		function isNotEmpty(caller){
+			if(caller.val() == ""){
+				caller.css("border", "1px solid red");
+				return false;
+			}
+			else
+			{
+				caller.css("border", '');
+				return true;
+			}
+		}
+
+	</script>
+
 	<!--===== Global required js =====-->
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="js/popper.min.js"></script>
@@ -971,4 +1014,4 @@
 	End of Javascript ==========-->
 
 </body>
-</html>
+</html> -->
